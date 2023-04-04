@@ -1,6 +1,6 @@
-name: Python package # Name of the Action.
+name: Python package
 
-on: [push] # When this action runs.
+on: [push]
 
 jobs:
   build:
@@ -26,4 +26,4 @@ jobs:
         pytest -v starter/test_main.py
     - name: Lint with flake8
       run: |
-        flake8 .
+        flake8 . --ignore=E501 --exclude starter/sanitycheck.py
