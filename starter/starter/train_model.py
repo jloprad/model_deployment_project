@@ -3,10 +3,15 @@ import joblib
 from ml.data import process_data
 from ml.model import *
 import pandas as pd
+import os
 
 
 # Add code to load in the data.
-df = pd.read_csv('../data/census.csv')
+
+# print(os.path.realpath(__file__))
+file_path= os.path.dirname(os.path.abspath(__file__))
+
+df = pd.read_csv(os.path.join( file_path,"..","data", "census.csv") )
 
 # Some data cleaning
 df.columns = df.columns.str.strip()
@@ -31,11 +36,12 @@ X_train, y_train, encoder, lb = process_data(
     train, categorical_features=cat_features, label="salary", training=True
 )
 
-joblib.dump( encoder, '../model/encoder.pkl')
-joblib.dump( lb, '../model/lb.pkl')
 
-encoder = joblib.load('../model/encoder.pkl')
-lb = joblib.load('../model/lb.pkl')
+joblib.dump( encoder, os.path.join( file_path,"..","model", "encoder.pkl") )
+joblib.dump( lb, os.path.join( file_path,"..","model", "lb.pkl") )
+
+encoder = joblib.load(os.path.join( file_path,"..","model", "encoder.pkl"))
+lb = joblib.load(os.path.join( file_path,"..","model", "lb.pkl"))
 
 # Proces the test data with the process_data function.
 X_test, y_test, __, __ = process_data(

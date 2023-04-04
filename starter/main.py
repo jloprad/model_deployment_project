@@ -5,7 +5,10 @@ import joblib
 from starter.ml.model import *
 from starter.ml.data import process_data
 import pandas as pd
+import os
 
+
+file_path = os.path.dirname(os.path.abspath(__file__))
 
 app = FastAPI()
 
@@ -54,8 +57,8 @@ async def model_inference(item: model_variables):
     df2 = df2.transpose()
 
     # Load the pipeline
-    encoder = joblib.load('model/encoder.pkl')
-    lb = joblib.load('model/lb.pkl')
+    encoder = joblib.load(os.path.join( file_path,"model", "encoder.pkl"))
+    lb = joblib.load(os.path.join( file_path,"model", "lb.pkl"))
 
     # Enconde the input
     x_inference, __, __, __ = process_data(
@@ -63,7 +66,7 @@ async def model_inference(item: model_variables):
     )
 
     # Get the prediction
-    rf = joblib.load('model/rf_model.pkl')
+    rf = joblib.load(os.path.join( file_path,"model", "rf_model.pkl"))
     num_pred = inference(rf, x_inference)
 
     if num_pred == 1:

@@ -2,6 +2,9 @@ from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
 import joblib
+import os
+
+file_path= os.path.dirname(os.path.abspath(__file__))
 
 def train_model(X_train, y_train):
     """
@@ -32,7 +35,8 @@ def train_model(X_train, y_train):
     cv_rfc.fit(X_train, y_train)
     rf = cv_rfc.best_estimator_
 
-    joblib.dump( rf, '../model/rf_model.pkl')
+
+    joblib.dump( rf, os.path.join( file_path,"..","..","model", "rf_model.pkl"))
 
     return rf
 
@@ -96,9 +100,9 @@ def compute_model_metrics_slice(x, y, preds, cat_features ):
     """
 
     # Only works for categorical variables
-    f = open("../model/slice_output.txt", "w")
+    f = open(os.path.join( file_path,"..","..","model", "slice_output.txt"), "w")
     f.write("Model metrics for each slice \n")
-    f = open("../model/slice_output.txt", "a")
+    f = open(os.path.join( file_path,"..","..","model", "slice_output.txt"), "a")
 
     for cat in cat_features:
         f.write("\n")
