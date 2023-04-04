@@ -26,4 +26,4 @@ jobs:
         pytest -v starter/test_main.py
     - name: Lint with flake8
       run: |
-        flake8 . --ignore=E501 --exclude starter/sanitycheck.py
+        flake8 . --count --statistics  --ignore=E501 --exclude sanitycheck.py
