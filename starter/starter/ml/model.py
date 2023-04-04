@@ -4,7 +4,8 @@ from sklearn.model_selection import GridSearchCV
 import joblib
 import os
 
-file_path= os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.dirname(os.path.abspath(__file__))
+
 
 def train_model(X_train, y_train):
     """
@@ -25,18 +26,24 @@ def train_model(X_train, y_train):
     rfc = RandomForestClassifier(random_state=24)
 
     param_grid = {
-    'n_estimators': [50, 100],
-    'max_features': ['sqrt'],
-    'max_depth': [4, 5, 100],
-    'criterion': ['gini', 'entropy']
+        'n_estimators': [50, 100],
+        'max_features': ['sqrt'],
+        'max_depth': [4, 5, 100],
+        'criterion': ['gini', 'entropy']
     }
 
     cv_rfc = GridSearchCV(estimator=rfc, param_grid=param_grid, cv=5)
     cv_rfc.fit(X_train, y_train)
     rf = cv_rfc.best_estimator_
 
-
-    joblib.dump( rf, os.path.join( file_path,"..","..","model", "rf_model.pkl"))
+    joblib.dump(
+        rf,
+        os.path.join(
+            file_path,
+            "..",
+            "..",
+            "model",
+            "rf_model.pkl"))
 
     return rf
 
@@ -80,7 +87,8 @@ def inference(model, X):
     predictions = model.predict(X)
     return predictions
 
-def compute_model_metrics_slice(x, y, preds, cat_features ):
+
+def compute_model_metrics_slice(x, y, preds, cat_features):
     """
     Calculates the model metrics for all the slices of categorical variables
 
@@ -100,9 +108,23 @@ def compute_model_metrics_slice(x, y, preds, cat_features ):
     """
 
     # Only works for categorical variables
-    f = open(os.path.join( file_path,"..","..","model", "slice_output.txt"), "w")
+    f = open(
+        os.path.join(
+            file_path,
+            "..",
+            "..",
+            "model",
+            "slice_output.txt"),
+        "w")
     f.write("Model metrics for each slice \n")
-    f = open(os.path.join( file_path,"..","..","model", "slice_output.txt"), "a")
+    f = open(
+        os.path.join(
+            file_path,
+            "..",
+            "..",
+            "model",
+            "slice_output.txt"),
+        "a")
 
     for cat in cat_features:
         f.write("\n")
@@ -110,8 +132,9 @@ def compute_model_metrics_slice(x, y, preds, cat_features ):
         for value in x[cat].unique():
             f.write("\n")
             f.write(f" Slice: {value} \n")
-            mask = (x[cat]==value)
-            precision, recall, fbeta = compute_model_metrics( y[mask] , preds[mask] )
+            mask = (x[cat] == value)
+            precision, recall, fbeta = compute_model_metrics(
+                y[mask], preds[mask])
             f.write(f"  Precision: {precision} \n")
             f.write(f"  Recall: {recall} \n")
             f.write(f"  Fbeta: {fbeta} \n")
