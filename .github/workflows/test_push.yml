@@ -5,7 +5,7 @@ on: [push] # When this action runs.
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: MacOS-latest
     strategy:
       matrix:
         python-version: [3.8]
