@@ -1,15 +1,11 @@
-# Script to train machine learning model.
-
 from sklearn.model_selection import train_test_split
-from ml.data import process_data
 import joblib
-from ml.data import process_data ########### PATH
-from ml.model import * ########### PATH
+from ml.data import process_data
+from ml.model import *
 import pandas as pd
 
 
 # Add code to load in the data.
-
 df = pd.read_csv('../data/census.csv')
 
 # Some data cleaning
@@ -35,6 +31,12 @@ X_train, y_train, encoder, lb = process_data(
     train, categorical_features=cat_features, label="salary", training=True
 )
 
+joblib.dump( encoder, '../model/encoder.pkl')
+joblib.dump( lb, '../model/lb.pkl')
+
+encoder = joblib.load('../model/encoder.pkl')
+lb = joblib.load('../model/lb.pkl')
+
 # Proces the test data with the process_data function.
 X_test, y_test, __, __ = process_data(
     test, categorical_features=cat_features,label='salary', training=False, encoder=encoder, lb=lb
@@ -44,6 +46,10 @@ X_test, y_test, __, __ = process_data(
 rf = train_model(X_train, y_train)
 
 pred = inference(rf, X_test)
-compute_model_metrics_slice(test, y_test, pred)
 
-joblib.dump( rf, '../model/rf_model.pkl')
+precision, recall, fbeta = compute_model_metrics( y_test , pred )
+print(f"precision: {precision}")
+print(f"recall: {recall}")
+print(f"fbeta: {fbeta}")
+
+compute_model_metrics_slice(test, y_test, pred, cat_features)

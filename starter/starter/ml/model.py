@@ -1,6 +1,7 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
+import joblib
 
 def train_model(X_train, y_train):
     """
@@ -30,6 +31,8 @@ def train_model(X_train, y_train):
     cv_rfc = GridSearchCV(estimator=rfc, param_grid=param_grid, cv=5)
     cv_rfc.fit(X_train, y_train)
     rf = cv_rfc.best_estimator_
+
+    joblib.dump( rf, '../model/rf_model.pkl')
 
     return rf
 
@@ -93,16 +96,20 @@ def compute_model_metrics_slice(x, y, preds, cat_features ):
     """
 
     # Only works for categorical variables
-    f = open("myfile.txt", "w")
+    f = open("../model/slice_output.txt", "w")
+    f.write("Model metrics for each slice \n")
+    f = open("../model/slice_output.txt", "a")
 
     for cat in cat_features:
-        print(f"Variable: {cat}")
+        f.write("\n")
+        f.write(f"Variable: {cat} \n")
         for value in x[cat].unique():
-            print(f" Slice: {value}")
+            f.write("\n")
+            f.write(f" Slice: {value} \n")
             mask = (x[cat]==value)
             precision, recall, fbeta = compute_model_metrics( y[mask] , preds[mask] )
-            print(f"  Precision: {precision}")
-            print(f"  Recall: {recall}")
-            print(f"  Fbeta: {fbeta}")
+            f.write(f"  Precision: {precision} \n")
+            f.write(f"  Recall: {recall} \n")
+            f.write(f"  Fbeta: {fbeta} \n")
 
     return None
