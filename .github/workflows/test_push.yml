@@ -1,6 +1,6 @@
-name: Python package # Name of the Action.
+name: Python package
 
-on: [push] # When this action runs.
+on: [push]
 
 jobs:
   build:
@@ -23,4 +23,7 @@ jobs:
         if [ -f starter/requirements.txt ]; then pip install -r starter/requirements.txt; fi
     - name: Test with pytest
       run: |
-        pytest starter/test_main.py
+        pytest -v starter/test_main.py
+    - name: Lint with flake8
+      run: |
+        flake8 . --ignore=E501 --exclude starter/sanitycheck.py
