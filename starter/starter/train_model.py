@@ -1,3 +1,6 @@
+"""
+Script that trains an inference model and saves it as a .pkl file. It also stores the related enconders
+"""
 from sklearn.model_selection import train_test_split
 import joblib
 from ml.data import process_data

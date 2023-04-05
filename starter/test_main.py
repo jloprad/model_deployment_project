@@ -1,3 +1,6 @@
+"""
+Script with the automatic tests for the app
+"""
 import json
 from fastapi.testclient import TestClient
 from main import app

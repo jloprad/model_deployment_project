@@ -1,3 +1,6 @@
+"""
+Script with the functions to train the inference model
+"""
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV

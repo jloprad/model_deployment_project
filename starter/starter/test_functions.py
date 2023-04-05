@@ -1,3 +1,6 @@
+"""
+Script that tests the functions related to train the inference model
+"""
 import pandas as pd
 import pytest
 import os

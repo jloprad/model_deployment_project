@@ -1,3 +1,6 @@
+"""
+Script with the app that does inference with the model
+"""
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 import joblib
