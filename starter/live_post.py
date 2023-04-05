@@ -20,7 +20,7 @@ data = {
     "capital-loss": 0,
     "hours-per-week": 40,
     "native-country": "United-States"
-    }
+        }
 
 r = requests.post("https://model-deployment-project.onrender.com/model_inference/", data=json.dumps(data))
 
