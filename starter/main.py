@@ -33,6 +33,24 @@ class model_variables(BaseModel):
 
     class Config:
         allow_population_by_field_name = True
+        schema_extra = {
+            "example": {
+                "age": 52,
+                "workclass": "Self-emp-inc",
+                "fnlgt": 287927,
+                "education": "HS-grad",
+                "education-num": 9,
+                "marital-status": "Married-civ-spouse",
+                "occupation": "Exec-managerial",
+                "relationship": "Wife",
+                "race": "White",
+                "sex": "Female",
+                "capital-gain": 15024,
+                "capital-loss": 0,
+                "hours-per-week": 40,
+                "native-country": "United-States"
+            }
+        }
 
 # Get with welcome message
 
