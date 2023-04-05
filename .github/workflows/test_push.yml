@@ -23,7 +23,7 @@ jobs:
         if [ -f starter/requirements.txt ]; then pip install -r starter/requirements.txt; fi
     - name: Test with pytest
       run: |
-        pytest -v starter/test_main.py
+        pytest -v
     - name: Lint with flake8
       run: |
         flake8 . --count --statistics  --ignore=E501 --exclude sanitycheck.py
